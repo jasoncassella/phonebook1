@@ -15,6 +15,12 @@ const App = () => {
 			id: persons.length + 1,
 			name: newPerson,
 		};
+
+		// this is a start. i need to check if a persons name is already in the phonebook
+		// before i add it to the list. and if it is i notify the user and dont add it
+		console.log(personObject.name);
+		persons.forEach(person => console.log(person.name));
+
 		setPersons(persons.concat(personObject));
 		setNewPerson('');
 	};
