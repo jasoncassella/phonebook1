@@ -26,6 +26,7 @@ const App = () => {
 
 		setPersons(persons.concat(personObject));
 		setNewPerson('');
+		setNewNumber('');
 	};
 
 	const handlePersonChange = event => {
@@ -40,6 +41,7 @@ const App = () => {
 		<div>
 			<h2>Phonebook</h2>
 			<form onSubmit={addPerson}>
+				<h2>add a new</h2>
 				<div>
 					name: <input value={newPerson} onChange={handlePersonChange} />
 				</div>
