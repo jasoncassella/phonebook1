@@ -32,12 +32,13 @@ const PersonForm = ({
 	);
 };
 
-const Persons = ({ personsToDisplay }) => {
+const Persons = ({ personsToDisplay, handleDeleteNumber }) => {
 	return (
 		<ul>
 			{personsToDisplay.map(person => (
 				<li key={person.id}>
 					{person.name} {person.number}
+					<button onClick={() => handleDeleteNumber(person.id)}>delete</button>
 				</li>
 			))}
 		</ul>
@@ -73,9 +74,11 @@ const App = () => {
 			return;
 		}
 
-		setPersons(persons.concat(personObject));
-		setNewPerson('');
-		setNewNumber('');
+		axios.post('http://localhost:3001/persons', personObject).then(response => {
+			setPersons(persons.concat(personObject));
+			setNewPerson('');
+			setNewNumber('');
+		});
 	};
 
 	const handlePersonChange = event => {
@@ -90,6 +93,13 @@ const App = () => {
 		setFilter(event.target.value);
 	};
 
+	const handleDeleteNumber = id => {
+		axios
+			.delete(`http://localhost:3001/persons/${id}`)
+			.then(setPersons(persons.filter(person => person.id !== id)))
+			.catch(error => console.error(error));
+	};
+
 	return (
 		<div>
 			<h2>Phonebook</h2>
@@ -102,7 +112,10 @@ const App = () => {
 				handleNumberChange={handleNumberChange}
 			/>
 			<h3>numbers</h3>
-			<Persons personsToDisplay={personsToDisplay} />
+			<Persons
+				personsToDisplay={personsToDisplay}
+				handleDeleteNumber={handleDeleteNumber}
+			/>
 		</div>
 	);
 };
