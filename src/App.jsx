@@ -94,10 +94,12 @@ const App = () => {
 	};
 
 	const handleDeleteNumber = id => {
-		axios
-			.delete(`http://localhost:3001/persons/${id}`)
-			.then(setPersons(persons.filter(person => person.id !== id)))
-			.catch(error => console.error(error));
+		const personToDelete = persons.find(person => person.id === id);
+		window.confirm(`Are you sure you want to delete ${personToDelete.name}`) &&
+			axios
+				.delete(`http://localhost:3001/persons/${id}`)
+				.then(setPersons(persons.filter(person => person.id !== id)))
+				.catch(error => console.error(error));
 	};
 
 	return (
