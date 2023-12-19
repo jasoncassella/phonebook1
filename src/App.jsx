@@ -70,7 +70,15 @@ const App = () => {
 		};
 
 		if (persons.some(person => person.name === newPerson)) {
-			alert(`${newPerson} is already added to phonebook`);
+			const person = person.find(p => p.name === newPerson);
+			console.log(person);
+			const updatedPerson = { ...person, number: newNumber };
+
+			window.confirm(
+				`${newPerson} is already added to the phonebook, replace the old number with a new one?`
+			)
+				? axios.put(`http://localhost:3001/persons/${id}`)
+				: console.log('do nothing');
 			return;
 		}
 
